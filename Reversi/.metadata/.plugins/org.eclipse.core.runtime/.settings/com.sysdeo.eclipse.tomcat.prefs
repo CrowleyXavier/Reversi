@@ -1,0 +1,7 @@
+tomcatDir=C:/Users/Ryoma Fushiki/Downloads/pleiades-2019-03-java-win-64bit-jre_20190508/pleiades/tomcat/8
+eclipse.preferences.version=1
+fixTomcatHomeBug=fixed
+contextsDir=C:/Users/Ryoma Fushiki/Downloads/pleiades-2019-03-java-win-64bit-jre_20190508/pleiades/tomcat/8/conf/Catalina/localhost
+tomcatVersion=tomcatV8
+computeSourcePath=true
+tomcatConfigFile=C:/Users/Ryoma Fushiki/Downloads/pleiades-2019-03-java-win-64bit-jre_20190508/pleiades/tomcat/8/conf/server.xml
