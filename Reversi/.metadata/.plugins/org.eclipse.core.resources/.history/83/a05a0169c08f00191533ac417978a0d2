@@ -48,7 +48,7 @@ public class game {
 	}
 
 
-	public void Reverse(int x,int y) {
+	public void Change(int x,int y) {
 		boolean turn=false;//ターン
 		boolean tonari=true;//変換できない場合、同色のとなりに石は置けない
 		int insert;

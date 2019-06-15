@@ -33,9 +33,7 @@ public class FormController implements Initializable {
         		for(int x=0;x<8;x++) {
                 	if(110+x*20<xpos&&xpos<130+x*20&&120+y*20<ypos&&ypos<140+y*20) {
                 		System.out.println("cellstate=  "+game.CellState(x, y)+"  (x,y)=("+x+","+y+")");
-                	if(game.CellState(x, y)==0) {
                 		game.Reverse(x, y);
-                	}
                 /*	if(game.CellState(x,y)==0) {
                 		if(game.FirstPlayer()==true) {
                 			game.ChangeWhite(x, y);

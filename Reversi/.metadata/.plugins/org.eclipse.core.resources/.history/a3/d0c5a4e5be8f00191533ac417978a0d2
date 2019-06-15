@@ -48,7 +48,7 @@ public class game {
 	}
 
 
-	public void Reverse(int x,int y) {
+	public void Change(int x,int y) {
 		boolean turn=false;//ターン
 		boolean tonari=true;//変換できない場合、同色のとなりに石は置けない
 		int insert;
@@ -246,37 +246,20 @@ public class game {
 						lu=10;
 						break;
 					case 1:
-						if(fp==true) {
-							if(tonari==false) {
-								turn=true;
-								lup_pos=lu;
-							}
-							lu=10;
-							break;
-						}else {
-							lu++;
-							tonari=false;
-							continue;
+						if(tonari==false) {
+							wturn=true;
+							lup_pos=lu;
 						}
+						lu=10;
+						break;
 					case 2:
-						if(fp==false) {
-							if(tonari==false) {
-								turn=true;
-								lup_pos=lu;
-							}
-							lu=10;
-							break;
-						}else {
-							lu++;
-							tonari=false;
-							continue;
-						}
-						default:
-							break;
+						lu++;
+						tonari=false;
+						continue;
 					}
 					if(lup_pos!=-1) {
 					for(int i=0;i<lup_pos;i++) {
-							cells[y+i][x+i]=insert;
+							cells[y+i][x+i]=1;
 						}
 					}
 				}
@@ -292,37 +275,20 @@ public class game {
 						ld=10;
 						break;
 					case 1:
-						if(fp==true) {
-							if(tonari==false) {
-								turn=true;
-								ld_pos=ld;
-							}
-							ld=10;
-							break;
-						}else {
-							ld++;
-							tonari=false;
-							continue;
+						if(tonari==false) {
+							wturn=true;
+							ld_pos=ld;
 						}
+						ld=10;
+						break;
 					case 2:
-						if(fp==false) {
-							if(tonari==false) {
-								turn=true;
-								ld_pos=ld;
-							}
-							ld=10;
-							break;
-						}else {
-							ld++;
-							tonari=false;
-							continue;
-						}
-						default:
-							break;
+						ld++;
+						tonari=false;
+						continue;
 					}
 					if(ld_pos!=-1) {
 					for(int i=0;i<ld_pos;i++) {
-							cells[y-i][x+i]=insert;
+							cells[y-i][x+i]=1;
 						}
 					}
 				}
@@ -338,37 +304,20 @@ public class game {
 						rd=10;
 						break;
 					case 1:
-						if(fp==true) {
-							if(tonari==false) {
-								turn=true;
-								rd_pos=rd;
-							}
-							rd=10;
-							break;
-						}else {
-							rd++;
-							tonari=false;
-							continue;
+						if(tonari==false) {
+							wturn=true;
+							rd_pos=rd;
 						}
+						rd=10;
+						break;
 					case 2:
-						if(fp==false) {
-							if(tonari==false) {
-								turn=true;
-								rd_pos=rd;
-							}
-							rd=10;
-							break;
-						}else {
-							rd++;
-							tonari=false;
-							continue;
-						}
-						default:
-							break;
+						rd++;
+						tonari=false;
+						continue;
 					}
 					if(rd_pos!=-1) {
 					for(int i=0;i<rd_pos;i++) {
-							cells[y-i][x-i]=insert;
+							cells[y-i][x-i]=1;
 						}
 					}
 				}
@@ -384,41 +333,28 @@ public class game {
 						ru=10;
 						break;
 					case 1:
-						if(fp==true) {
-							if(tonari==false) {
-								turn=true;
-								ru_pos=ru;
-							}
-							ru=10;
-							break;
-						}else {
-							ru++;
-							tonari=false;
-							continue;
+						if(tonari==false) {
+							wturn=true;
+							ru_pos=ru;
 						}
+						ru=10;
+						break;
 					case 2:
-						if(fp==false) {
-							if(tonari==false) {
-								turn=true;
-								ru_pos=ru;
-							}
-							ru=10;
-							break;
-						}else {
-							ru++;
-							tonari=false;
-							continue;
-						}
+
+						ru++;
+						tonari=false;
+						continue;
 					}
 					if(ru_pos!=-1) {
 					for(int i=0;i<ru_pos;i++) {
-							cells[y+i][x-i]=insert;
+							cells[y+i][x-i]=1;
 						}
 					}
 				}
-		if(turn==true) {
+
+		if(wturn==true) {
 			Change();
-			turn=false;
+			wturn=false;
 		}
 	}
 
