@@ -2,7 +2,7 @@ package game;
 
 public class game {
 	private int[][] cells= new int[8][8];
-	private int[][] koho_cells= new int[8][8];
+	private boolean[][] koho_cells= new boolean[8][8];
 	private boolean fp=true;//先攻か後攻かを判定
 
 	public game() {
@@ -11,7 +11,7 @@ public class game {
 				cells[i][j]=0;
 			}
 		}
-		cells[3][3]=1;
+		cells[3][3]=2;
 		cells[4][3]=2;
 		cells[3][4]=2;
 		cells[4][4]=1;
@@ -28,13 +28,11 @@ public class game {
 		}
 	}
 
-	public int KohoState(int x,int y) {
-		if(koho_cells[y][x]==1) {
-			return 1;//候補
-		}else if(cells[y][x]==2){
-			return 2;//石がすでに置いてある
+	public boolean KohoState(int x,int y) {
+		if(koho_cells[y][x]==true) {
+			return true;//白
 		}else {
-			return 0;//空
+			return false;
 		}
 	}
 
@@ -56,7 +54,7 @@ public class game {
 	public void Koho() {//おける場所をkoho_cellsに入れる
 		for(int i=0;i<8;i++) {//初期化
 			for(int j=0;j<8;j++) {
-				koho_cells[i][j]=0;
+				koho_cells[i][j]=false;
 			}
 		}
 		//おける場所を格納
@@ -64,15 +62,13 @@ public class game {
 			for(int j=0;j<8;j++) {
 				if(cells[i][j]==0) {
 					koho_cells[i][j]=JudgeSet(j,i);
-				}else {
-					koho_cells[i][j]=2;
 				}
 			}
 		}
 	}
 
-	public int JudgeSet(int x,int y) {
-		boolean tonari=true;//反転できない場合、同色のとなりに石は置けない
+	public boolean JudgeSet(int x,int y) {
+		boolean tonari=true;//変換できない場合、同色のとなりに石は置けない
 
 		//上方向
 		for(int i=y-1;i>=0;i--) {
@@ -84,7 +80,7 @@ public class game {
 			case 1:
 				if(fp==true) {
 					if(tonari==false) {
-						return 1;
+						return true;
 					}
 					i=-1;
 					break;
@@ -98,7 +94,7 @@ public class game {
 				continue;
 			}else {
 				if(tonari==false) {
-					return 1;
+					return true;
 				}
 				i=-1;
 				break;
@@ -121,7 +117,7 @@ public class game {
 			case 1:
 				if(fp==true) {
 					if(tonari==false) {
-						return 1;
+						return true;
 					}
 					i=8;
 					break;
@@ -132,7 +128,7 @@ public class game {
 			case 2:
 				if(fp==false) {
 					if(tonari==false) {
-						return 1;
+						return true;
 					}
 					i=8;
 					break;
@@ -157,7 +153,7 @@ public class game {
 			case 1:
 				if(fp==true) {
 					if(tonari==false) {
-						return 1;
+						return true;
 					}
 					i=8;
 					break;
@@ -168,7 +164,7 @@ public class game {
 			case 2:
 				if(fp==false) {
 					if(tonari==false) {
-						return 1;
+						return true;
 					}
 					i=8;
 					break;
@@ -195,7 +191,7 @@ public class game {
 			case 1:
 				if(fp==true) {
 					if(tonari==false) {
-						return 1;
+						return true;
 					}
 					i=-1;
 					break;
@@ -206,7 +202,7 @@ public class game {
 			case 2:
 				if(fp==false) {
 					if(tonari==false) {
-						return 1;
+						return true;
 					}
 					i=-1;
 					break;
@@ -234,7 +230,7 @@ public class game {
 					case 1:
 						if(fp==true) {
 							if(tonari==false) {
-								return 1;
+								return true;
 							}
 							lu=10;
 							break;
@@ -246,7 +242,7 @@ public class game {
 					case 2:
 						if(fp==false) {
 							if(tonari==false) {
-								return 1;
+								return true;
 							}
 							lu=10;
 							break;
@@ -272,7 +268,7 @@ public class game {
 					case 1:
 						if(fp==true) {
 							if(tonari==false) {
-								return 1;
+								return true;
 							}
 							ld=10;
 							break;
@@ -284,7 +280,7 @@ public class game {
 					case 2:
 						if(fp==false) {
 							if(tonari==false) {
-								return 1;
+								return true;
 							}
 							ld=10;
 							break;
@@ -310,7 +306,7 @@ public class game {
 					case 1:
 						if(fp==true) {
 							if(tonari==false) {
-								return 1;
+								return true;
 							}
 							rd=10;
 							break;
@@ -322,7 +318,7 @@ public class game {
 					case 2:
 						if(fp==false) {
 							if(tonari==false) {
-								return 1;
+								return true;
 							}
 							rd=10;
 							break;
@@ -348,7 +344,7 @@ public class game {
 					case 1:
 						if(fp==true) {
 							if(tonari==false) {
-								return 1;
+								return true;
 							}
 							ru=10;
 							break;
@@ -360,7 +356,7 @@ public class game {
 					case 2:
 						if(fp==false) {
 							if(tonari==false) {
-								return 1;
+								return true;
 							}
 							ru=10;
 							break;
@@ -371,7 +367,7 @@ public class game {
 						}
 					}
 				}
-				return 0;
+				return false;
 	}
 
 

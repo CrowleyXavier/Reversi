@@ -74,11 +74,6 @@ public class FormController implements Initializable {
 					gc.setFill(Color.GREEN);
 					gc.fillRect(10.8+x*20, 20.8+y*20, 18.5, 18.5);
 				}
-				
-				if(game.CellState(x, y)!=0) {
-					gc.setFill(Color.GREEN);
-					gc.fillRect(10.8+x*20, 20.8+y*20, 18.5, 18.5);
-				}
 			}
 		}
 

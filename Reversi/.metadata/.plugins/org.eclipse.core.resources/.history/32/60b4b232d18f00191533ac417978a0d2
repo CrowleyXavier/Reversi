@@ -24,7 +24,7 @@ public class FormController implements Initializable {
 		game = new game();
 		System.out.println("Hello");
 		gc=canvas.getGraphicsContext2D();
-		game.Koho();
+
         canvas.setOnMousePressed(ev ->{//クリックすると石を設置する
         	int xpos = (int)ev.getSceneX();
         	int ypos = (int)ev.getSceneY();
@@ -35,8 +35,14 @@ public class FormController implements Initializable {
                 		System.out.println("cellstate=  "+game.CellState(x, y)+"  (x,y)=("+x+","+y+")");
                 	if(game.CellState(x, y)==0) {
                 		game.Reverse(x, y);
-                		game.Koho();
                 	}
+                /*	if(game.CellState(x,y)==0) {
+                		if(game.FirstPlayer()==true) {
+                			game.ChangeWhite(x, y);
+                		}else {
+                			game.ChangeBlack(x,y);
+                		}
+                	}*/
                 	}
         		}
         	}
@@ -64,23 +70,6 @@ public class FormController implements Initializable {
 		for(int h=0;h<=8;h++) {//横線
 			gc.strokeLine(10, 20+h*20, 10+20*8, 20+h*20);
 		}
-		//候補場所の配置
-		for(int y=0;y<8;y++) {
-			for(int x =0;x<8;x++) {
-				if(game.KohoState(x, y)==1&&game.CellState(x, y)==0) {
-					gc.setFill(Color.RED);
-					gc.fillRect(10.8+x*20, 20.8+y*20, 18.5, 18.5);
-				}else if(game.KohoState(x, y)==0) {
-					gc.setFill(Color.GREEN);
-					gc.fillRect(10.8+x*20, 20.8+y*20, 18.5, 18.5);
-				}
-				
-				if(game.CellState(x, y)!=0) {
-					gc.setFill(Color.GREEN);
-					gc.fillRect(10.8+x*20, 20.8+y*20, 18.5, 18.5);
-				}
-			}
-		}
 
 		//石の配置
 		for(int y=0;y<8;y++) {
@@ -94,8 +83,6 @@ public class FormController implements Initializable {
 				}
 			}
 		}
-
-
 
 	}
 

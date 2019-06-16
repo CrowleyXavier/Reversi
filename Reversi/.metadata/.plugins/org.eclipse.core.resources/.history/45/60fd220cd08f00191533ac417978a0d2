@@ -2,7 +2,7 @@ package game;
 
 public class game {
 	private int[][] cells= new int[8][8];
-	private int[][] koho_cells= new int[8][8];
+	private int[][] kouho_cells= new int[8][8];
 	private boolean fp=true;//先攻か後攻かを判定
 
 	public game() {
@@ -11,7 +11,7 @@ public class game {
 				cells[i][j]=0;
 			}
 		}
-		cells[3][3]=1;
+		cells[3][3]=2;
 		cells[4][3]=2;
 		cells[3][4]=2;
 		cells[4][4]=1;
@@ -23,16 +23,6 @@ public class game {
 			return 1;//白
 		}else if(cells[y][x]==2){
 			return 2;//黒
-		}else {
-			return 0;//空
-		}
-	}
-
-	public int KohoState(int x,int y) {
-		if(koho_cells[y][x]==1) {
-			return 1;//候補
-		}else if(cells[y][x]==2){
-			return 2;//石がすでに置いてある
 		}else {
 			return 0;//空
 		}
@@ -53,28 +43,15 @@ public class game {
 		}
 	}
 
-	public void Koho() {//おける場所をkoho_cellsに入れる
-		for(int i=0;i<8;i++) {//初期化
-			for(int j=0;j<8;j++) {
-				koho_cells[i][j]=0;
-			}
-		}
-		//おける場所を格納
-		for(int i=0;i<8;i++) {
-			for(int j=0;j<8;j++) {
-				if(cells[i][j]==0) {
-					koho_cells[i][j]=JudgeSet(j,i);
-				}else {
-					koho_cells[i][j]=2;
-				}
-			}
-		}
+	public void Koho() {
+
 	}
 
-	public int JudgeSet(int x,int y) {
-		boolean tonari=true;//反転できない場合、同色のとなりに石は置けない
+	public void JudgeSet(int x,int y) {
+		boolean tonari=true;//変換できない場合、同色のとなりに石は置けない
 
 		//上方向
+		int up=-1;
 		for(int i=y-1;i>=0;i--) {
 			int check=cells[i][x];
 			switch(check) {
@@ -84,7 +61,7 @@ public class game {
 			case 1:
 				if(fp==true) {
 					if(tonari==false) {
-						return 1;
+						up=i;
 					}
 					i=-1;
 					break;
@@ -98,7 +75,7 @@ public class game {
 				continue;
 			}else {
 				if(tonari==false) {
-					return 1;
+					up=i;
 				}
 				i=-1;
 				break;
@@ -112,6 +89,7 @@ public class game {
 
 		//下方向
 		tonari=true;
+		int down=-1;
 		for(int i=y+1;i<8;i++) {
 			int check=cells[i][x];
 			switch(check) {
@@ -121,7 +99,7 @@ public class game {
 			case 1:
 				if(fp==true) {
 					if(tonari==false) {
-						return 1;
+						down=i;
 					}
 					i=8;
 					break;
@@ -132,7 +110,7 @@ public class game {
 			case 2:
 				if(fp==false) {
 					if(tonari==false) {
-						return 1;
+						down=i;
 					}
 					i=8;
 					break;
@@ -148,6 +126,7 @@ public class game {
 
 		//右方向
 		tonari=true;;
+		int right=-1;
 		for(int i= x+1;i<8;i++) {
 			int check=cells[y][i];
 			switch(check) {
@@ -157,7 +136,7 @@ public class game {
 			case 1:
 				if(fp==true) {
 					if(tonari==false) {
-						return 1;
+						right=i;
 					}
 					i=8;
 					break;
@@ -168,7 +147,7 @@ public class game {
 			case 2:
 				if(fp==false) {
 					if(tonari==false) {
-						return 1;
+						right=i;
 					}
 					i=8;
 					break;
@@ -184,7 +163,7 @@ public class game {
 
 		//左方向
 		tonari=true;
-
+		int left=-1;
 		for(int i= x-1;i>=0;i--) {
 			int check=cells[y][i];
 
@@ -195,7 +174,7 @@ public class game {
 			case 1:
 				if(fp==true) {
 					if(tonari==false) {
-						return 1;
+						left=i;
 					}
 					i=-1;
 					break;
@@ -206,7 +185,7 @@ public class game {
 			case 2:
 				if(fp==false) {
 					if(tonari==false) {
-						return 1;
+						left=i;
 					}
 					i=-1;
 					break;
@@ -223,6 +202,7 @@ public class game {
 
 		//左上方向
 				tonari=true;
+				int lup_pos=-1;
 				int lu=1;
 				while(x+lu<8&&y+lu<8) {
 					int check=cells[y+lu][x+lu];
@@ -234,7 +214,7 @@ public class game {
 					case 1:
 						if(fp==true) {
 							if(tonari==false) {
-								return 1;
+								lup_pos=lu;
 							}
 							lu=10;
 							break;
@@ -246,7 +226,7 @@ public class game {
 					case 2:
 						if(fp==false) {
 							if(tonari==false) {
-								return 1;
+								lup_pos=lu;
 							}
 							lu=10;
 							break;
@@ -262,6 +242,7 @@ public class game {
 
 				//左下方向
 				tonari=true;
+				int ld_pos=-1;
 				int ld=1;
 				while(x+ld<8&&y-ld>0) {
 					int check=cells[y-ld][x+ld];
@@ -272,7 +253,7 @@ public class game {
 					case 1:
 						if(fp==true) {
 							if(tonari==false) {
-								return 1;
+								ld_pos=ld;
 							}
 							ld=10;
 							break;
@@ -284,7 +265,7 @@ public class game {
 					case 2:
 						if(fp==false) {
 							if(tonari==false) {
-								return 1;
+								ld_pos=ld;
 							}
 							ld=10;
 							break;
@@ -300,6 +281,7 @@ public class game {
 
 				//右下方向
 				tonari=true;
+				int rd_pos=-1;
 				int rd=1;
 				while(x-rd>0&&y-rd>0) {
 					int check=cells[y-rd][x-rd];
@@ -310,7 +292,7 @@ public class game {
 					case 1:
 						if(fp==true) {
 							if(tonari==false) {
-								return 1;
+								rd_pos=rd;
 							}
 							rd=10;
 							break;
@@ -322,7 +304,7 @@ public class game {
 					case 2:
 						if(fp==false) {
 							if(tonari==false) {
-								return 1;
+								rd_pos=rd;
 							}
 							rd=10;
 							break;
@@ -338,6 +320,7 @@ public class game {
 
 				//右上方向
 				tonari=true;
+				int ru_pos=-1;
 				int ru=1;
 				while(x-ru>0&&y+ru<8) {
 					int check=cells[y+ru][x-ru];
@@ -348,7 +331,7 @@ public class game {
 					case 1:
 						if(fp==true) {
 							if(tonari==false) {
-								return 1;
+								ru_pos=ru;
 							}
 							ru=10;
 							break;
@@ -360,7 +343,7 @@ public class game {
 					case 2:
 						if(fp==false) {
 							if(tonari==false) {
-								return 1;
+								ru_pos=ru;
 							}
 							ru=10;
 							break;
@@ -371,7 +354,6 @@ public class game {
 						}
 					}
 				}
-				return 0;
 	}
 
 

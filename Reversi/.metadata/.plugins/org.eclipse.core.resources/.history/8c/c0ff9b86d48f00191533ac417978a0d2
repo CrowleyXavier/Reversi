@@ -11,7 +11,7 @@ public class game {
 				cells[i][j]=0;
 			}
 		}
-		cells[3][3]=1;
+		cells[3][3]=2;
 		cells[4][3]=2;
 		cells[3][4]=2;
 		cells[4][4]=1;
@@ -72,7 +72,7 @@ public class game {
 	}
 
 	public int JudgeSet(int x,int y) {
-		boolean tonari=true;//反転できない場合、同色のとなりに石は置けない
+		boolean tonari=true;//変換できない場合、同色のとなりに石は置けない
 
 		//上方向
 		for(int i=y-1;i>=0;i--) {
