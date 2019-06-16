@@ -12,7 +12,7 @@ public class game {
 			}
 		}
 		cells[3][3]=1;
-		cells[4][3]=2;
+		cells[4][3]=1;
 		cells[3][4]=2;
 		cells[4][4]=1;
 	}
@@ -69,6 +69,19 @@ public class game {
 				}
 			}
 		}
+	}
+
+	public boolean Pass() {
+		for(int i=0;i<8;i++) {
+			for(int j=0;j<8;j++) {
+				if(koho_cells[i][j]!=1) {
+					continue;
+				}else {
+					return false;
+				}
+			}
+		}
+		return true;//候補がなければパス発動
 	}
 
 	public int JudgeSet(int x,int y) {

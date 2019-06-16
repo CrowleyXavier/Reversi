@@ -34,8 +34,16 @@ public class FormController implements Initializable {
                 	if(110+x*20<xpos&&xpos<130+x*20&&120+y*20<ypos&&ypos<140+y*20) {
                 		System.out.println("cellstate=  "+game.CellState(x, y)+"  (x,y)=("+x+","+y+")");
                 	if(game.CellState(x, y)==0) {
-                		game.Reverse(x, y);
-                		game.Koho();
+                		game.Reverse(x, y);//反転操作
+                		game.Koho();//おける場所を探す
+                		if(game.Pass()==true) {
+                			game.Change();
+                			System.out.println("Pass");
+                			game.Koho();
+                			if(game.Pass()==true) {
+                				System.out.println("GameOver");
+                			}
+                		}
                 	}
                 	}
         		}
@@ -74,7 +82,7 @@ public class FormController implements Initializable {
 					gc.setFill(Color.GREEN);
 					gc.fillRect(10.8+x*20, 20.8+y*20, 18.5, 18.5);
 				}
-				
+
 				if(game.CellState(x, y)!=0) {
 					gc.setFill(Color.GREEN);
 					gc.fillRect(10.8+x*20, 20.8+y*20, 18.5, 18.5);
