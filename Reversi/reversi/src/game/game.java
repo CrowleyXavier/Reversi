@@ -84,6 +84,25 @@ public class game {
 		return true;//候補がなければパス発動
 	}
 
+	public void Reset() {
+		for(int i=0;i<8;i++) {
+			for(int j=0;j<8;j++) {
+				cells[i][j]=0;
+				fp=true;
+			}
+		}
+
+		cells[3][3]=1;
+		cells[4][3]=2;
+		cells[3][4]=2;
+		cells[4][4]=1;
+	}
+
+
+
+
+
+
 	public int JudgeSet(int x,int y) {
 		boolean tonari=true;//反転できない場合、同色のとなりに石は置けない
 
@@ -386,7 +405,6 @@ public class game {
 				}
 				return 0;
 	}
-
 
 	public void Reverse(int x,int y) {
 		boolean turn=false;//ターン
@@ -761,12 +779,6 @@ public class game {
 			turn=false;
 		}
 	}
-
-
-
-
-
-
 
 
 

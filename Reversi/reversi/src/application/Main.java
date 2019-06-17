@@ -6,7 +6,6 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 
@@ -16,7 +15,7 @@ public class Main extends Application {
 		try {
 			BorderPane root = (BorderPane)FXMLLoader.load(getClass().getResource("Form.fxml"));
 			Scene scene = new Scene(root,400,400);
-			scene.setFill(Color.GREEN);
+			//scene.setFill(Color.GREEN);
 
 			stage.setScene(scene);
 			stage.setTitle("Reversi");
