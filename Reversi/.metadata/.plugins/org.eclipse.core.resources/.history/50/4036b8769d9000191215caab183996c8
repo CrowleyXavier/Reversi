@@ -8,7 +8,6 @@ public class game {
 	private int[][] koho_cells= new int[8][8];
 	private boolean fp=true;//先攻か後攻かを判定
 	public List<int[][]> history = new ArrayList<int[][]>();
-	public List<Boolean> history_turn = new ArrayList<Boolean>();
 
 	public game() {
 		for(int i=0;i<8;i++) {
@@ -91,7 +90,6 @@ public class game {
 
 	public void Reset() {//盤面と順番をリセット
 		history.clear();
-		history_turn.clear();
 		for(int i=0;i<8;i++) {
 			for(int j=0;j<8;j++) {
 				cells[i][j]=0;
@@ -104,13 +102,12 @@ public class game {
 		cells[4][4]=1;
 	}
 
-	public void Undo() {//undoメソッド
+	public void undo() {//undoメソッド
 
 		if(isUndoable()==true) {
 			cells = history.get(history.size()-1);
 			history.remove(history.size()-1);
-			fp=history_turn.get(history_turn.size()-1);
-			history_turn.remove(history_turn.size()-1);
+		//	System.out.println(history.size());
 		}
 	}
 	public boolean isUndoable() {
@@ -119,7 +116,21 @@ public class game {
 		}else return false;
 	}
 
-
+	public void Save() {//現在の盤面をhistoryに保存
+		int[][] save = new int[8][8];
+		for(int i=0;i<8;i++) {
+			for(int j=0;j<8;j++) {
+				if(cells[i][j]==0) {
+					save[i][j]=0;
+				}else if(cells[i][j]==1) {
+					save[i][j]=1;
+				}else {
+					save[i][j]=2;
+				}
+			}
+		}
+		history.add(save);//盤面を保存
+	}
 
 
 	public int JudgeSet(int x,int y) {
@@ -429,19 +440,6 @@ public class game {
 		boolean turn=false;//ターン
 		boolean tonari=true;//変換できない場合、同色のとなりに石は置けない
 		int insert;
-		int[][] save = new int[8][8];
-
-		for(int i=0;i<8;i++) {//現在の盤面を取得
-			for(int j=0;j<8;j++) {
-				if(cells[i][j]==0) {
-					save[i][j]=0;
-				}else if(cells[i][j]==1) {
-					save[i][j]=1;
-				}else {
-					save[i][j]=2;
-				}
-			}
-		}
 		if(fp==true) {
 			insert = 1;
 		}else {
@@ -807,12 +805,6 @@ public class game {
 					}
 				}
 		if(turn==true) {
-			history.add(save);//盤面を保存
-			if(fp==true) {
-				history_turn.add(true);
-			}else {
-				history_turn.add(false);
-			}
 			Change();
 			turn=false;
 		}

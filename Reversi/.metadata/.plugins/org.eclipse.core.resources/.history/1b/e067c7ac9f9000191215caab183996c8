@@ -109,6 +109,7 @@ public class game {
 		if(isUndoable()==true) {
 			cells = history.get(history.size()-1);
 			history.remove(history.size()-1);
+		//	System.out.println(history.size());
 			fp=history_turn.get(history_turn.size()-1);
 			history_turn.remove(history_turn.size()-1);
 		}

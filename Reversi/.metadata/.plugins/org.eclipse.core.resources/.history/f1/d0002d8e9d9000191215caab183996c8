@@ -64,8 +64,7 @@ public class FormController implements Initializable {
 
     @FXML
     public void onUndoClicked() {
-    	game.Undo();
-    	game.Koho();
+   // 	game.undo();
         draw();
     }
 

@@ -37,7 +37,6 @@ public class FormController implements Initializable {
                 	if(110+x*20<xpos&&xpos<130+x*20&&125+y*20<ypos&&ypos<145+y*20) {
                 		System.out.println("cellstate=  "+game.CellState(x, y)+"  (x,y)=("+x+","+y+")");
                 	if(game.CellState(x, y)==0) {
-
                 		game.Reverse(x, y);//反転操作
                 		game.Koho();//おける場所を探す
 
@@ -64,8 +63,7 @@ public class FormController implements Initializable {
 
     @FXML
     public void onUndoClicked() {
-    	game.Undo();
-    	game.Koho();
+   // 	game.undo();
         draw();
     }
 
