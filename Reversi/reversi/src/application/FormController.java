@@ -24,36 +24,39 @@ public class FormController implements Initializable {
 
 	@Override
 	public void initialize(URL location,ResourceBundle resources) {
-
 		game = new game();
 		gc=canvas.getGraphicsContext2D();
+
 		game.Koho();
-        canvas.setOnMousePressed(ev ->{//クリックすると石を設置する
-        	int xpos = (int)ev.getSceneX();
-        	int ypos = (int)ev.getSceneY();
-        	System.out.println("(x,y)=("+xpos+","+ypos+")");
+
+		//クリックすると石を設置する
+        canvas.setOnMousePressed(ev ->{
+        	int Mouse_x_position = (int)ev.getSceneX();
+        	int Mouse_y_position = (int)ev.getSceneY();
+        	System.out.println("(x,y)=("+Mouse_x_position+","+Mouse_y_position+")");
         	for(int y=0;y<8;y++) {
         		for(int x=0;x<8;x++) {
-                	if(110+x*20<xpos&&xpos<130+x*20&&125+y*20<ypos&&ypos<145+y*20) {
+                	if(110+x*20<Mouse_x_position&&Mouse_x_position<130+x*20&&125+y*20<Mouse_y_position&&Mouse_y_position<145+y*20) {
                 		System.out.println("cellstate=  "+game.CellState(x, y)+"  (x,y)=("+x+","+y+")");
-                	if(game.CellState(x, y)==0) {
+                		if(game.CellState(x, y)==0) {
 
-                		game.Reverse(x, y);//反転操作
-                		game.Koho();//おける場所を探す
+                			game.TestReverse(x, y);//反転操作
+                			game.Koho();//おける場所を探す
 
-                		if(game.Pass()==true) {
-                			game.Change();
-                			System.out.println("Pass");//おける場所がなければパス
-                			game.Koho();
                 			if(game.Pass()==true) {
-                				System.out.println("GameOver");//どちらとも置く場所がなければ終了
-                				label_text.setText("ゲーム終了");
+                				game.ChangeTurn();
+                				System.out.println("Pass");//おける場所がなければパス
+                				game.Koho();
+                				if(game.Pass()==true) {
+                					System.out.println("GameOver");//どちらとも置く場所がなければ終了
+                					label_text.setText("ゲーム終了");
+                				}
                 			}
                 		}
                 	}
-                	}
         		}
         	}
+
         	draw();
         });
 
@@ -61,14 +64,16 @@ public class FormController implements Initializable {
 	}
 
 
-
+	//Undoボタンを押すと、盤面を1つ前に戻す
     @FXML
-    public void onUndoClicked() {
+    public void onUndoClicked() {//ひとつ前に戻る
     	game.Undo();
     	game.Koho();
         draw();
     }
 
+
+    //Resetのボタンを押すと、盤面が初期状態になる
     @FXML
     public void onResetClicked() {
     	game.Reset();
@@ -77,17 +82,17 @@ public class FormController implements Initializable {
     }
 
 
-
-
-
-
-
-
-
-
 	public void draw() {
+		//undo出来るときはラベルが黒色で出来ないときは赤色となる
+		if(game.isUndoable()==true) {
+			button_Undo.setTextFill(Color.BLACK);
+		}else {
+			button_Undo.setTextFill(Color.RED);
+		}
+
 		int white =0;
 		int black=0;
+		//盤面上の白石と黒石の個数を数える
 		for(int y=0;y<8;y++) {
 			for(int x =0;x<8;x++) {
 				if(game.CellState(x, y)==1) {
@@ -108,6 +113,9 @@ public class FormController implements Initializable {
 			label_text.setText("黒石のターンです");
 		}
 		//盤面作成
+		gc.setFill(Color.GREEN);
+		gc.fillRect(10, 20, 160, 160);//下生地
+
 		for(int v=0;v<=8;v++) {//縦線
 			gc.strokeLine(10+20*v, 20, 10+20*v, 20+8*20);
 		}
@@ -119,14 +127,14 @@ public class FormController implements Initializable {
 			for(int x =0;x<8;x++) {
 				if(game.KohoState(x, y)==1&&game.CellState(x, y)==0) {
 					gc.setFill(Color.RED);
-					gc.fillRect(10.8+x*20, 20.8+y*20, 18.5, 18.5);
+					gc.fillRect(10.2+x*20, 20.2+y*20, 19, 19);
 				}else if(game.KohoState(x, y)==0) {
 					gc.setFill(Color.GREEN);
-					gc.fillRect(10.8+x*20, 20.8+y*20, 18.5, 18.5);
+					gc.fillRect(10.2+x*20, 20.2+y*20, 19, 19);
 				}
 				if(game.CellState(x, y)!=0) {
 					gc.setFill(Color.GREEN);
-					gc.fillRect(10.8+x*20, 20.8+y*20, 18.5, 18.5);
+					gc.fillRect(10.2+x*20, 20.2+y*20, 19, 19);
 				}
 			}
 		}
