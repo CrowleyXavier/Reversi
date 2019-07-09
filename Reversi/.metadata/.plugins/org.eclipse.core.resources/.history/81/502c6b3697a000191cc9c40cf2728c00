@@ -29,24 +29,26 @@ public class FormController implements Initializable {
 
 		game.Koho();
 
-		//クリックした場所に石が置けるならば石を置く
+		//クリックすると石を設置する
         canvas.setOnMousePressed(ev ->{
         	int Mouse_x_position = (int)ev.getSceneX();
         	int Mouse_y_position = (int)ev.getSceneY();
-
+        	System.out.println("(x,y)=("+Mouse_x_position+","+Mouse_y_position+")");
         	for(int y=0;y<8;y++) {
         		for(int x=0;x<8;x++) {
                 	if(110+x*20<Mouse_x_position&&Mouse_x_position<130+x*20&&125+y*20<Mouse_y_position&&Mouse_y_position<145+y*20) {
+                		System.out.println("cellstate=  "+game.CellState(x, y)+"  (x,y)=("+x+","+y+")");
                 		if(game.CellState(x, y)==0) {
+
                 			game.Reverse(x, y);//反転操作
                 			game.Koho();//おける場所を探す
 
                 			if(game.Pass()==true) {
-                				//おける場所がなければパス
                 				game.ChangeTurn();
+                				System.out.println("Pass");//おける場所がなければパス
                 				game.Koho();
                 				if(game.Pass()==true) {
-                					//白石と黒石のどちらとも置く場所がなければ終了
+                					System.out.println("GameOver");//どちらとも置く場所がなければ終了
                 					label_text.setText("ゲーム終了");
                 				}
                 			}
@@ -81,7 +83,7 @@ public class FormController implements Initializable {
 
 
 	public void draw() {
-		//undo出来るときはUndoボタンの文字がが黒色で出来ないときは赤色となる
+		//undo出来るときはラベルが黒色で出来ないときは赤色となる
 		if(game.isUndoable()==true) {
 			button_Undo.setTextFill(Color.BLACK);
 		}else {

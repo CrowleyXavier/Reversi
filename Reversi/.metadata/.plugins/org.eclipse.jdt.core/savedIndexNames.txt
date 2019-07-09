@@ -10,8 +10,8 @@ INDEX VERSION 1.131+C:\Users\Ryoma Fushiki\Documents\GitHub\Reversi\Reversi\.met
 1908016302.index
 759778962.index
 860778344.index
-1493580706.index
 3257200880.index
+1493580706.index
 2597183175.index
 4168016471.index
 320498635.index

@@ -4,11 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class game {
-	private int[][] cells= new int[8][8];							//盤面の状態のデータを格納する
-	private int[][] koho_cells= new int[8][8];						//次に石をおける場所かどうかを格納する
-	private boolean first_player =true;							//先攻か後攻かを判定
-	public List<int[][]> history = new ArrayList<int[][]>();		//過去の盤面を格納する
-	public List<Boolean> history_turn = new ArrayList<Boolean>();	//過去の手番を格納する
+	private int[][] cells= new int[8][8];
+	private int[][] koho_cells= new int[8][8];
+	private boolean fp=true;//先攻か後攻かを判定
+	public List<int[][]> history = new ArrayList<int[][]>();
+	public List<Boolean> history_turn = new ArrayList<Boolean>();
 
 
 	public game() {
@@ -52,12 +52,12 @@ public class game {
 
 	//手番を交代する
 	public void ChangeTurn() {
-		first_player = !first_player;
+	fp = !fp;
 	}
 
-	//first_playerの値を返す
+	//fpの値を返す
 	public boolean FirstPlayer() {
-		if(first_player==true) {
+		if(fp==true) {
 			return true;
 		}else {
 			return false;
@@ -110,7 +110,7 @@ public class game {
 		if(isUndoable()==true) {
 			cells = history.get(history.size()-1);
 			history.remove(history.size()-1);
-			first_player=history_turn.get(history_turn.size()-1);
+			fp=history_turn.get(history_turn.size()-1);
 			history_turn.remove(history_turn.size()-1);
 		}
 	}
@@ -125,7 +125,6 @@ public class game {
 		}
 	}
 
-	//(x,y)のマスに石を置けるなら1を返し、置けないなら0を返す
 	public int JudgeSet(int x, int y) {
 		boolean judge_up = JudgeUp(x,y);
 		boolean judge_down = JudgeDown(x,y);
@@ -144,13 +143,12 @@ public class game {
 		}
 	}
 
-	//石を反転させる
+
 	public void Reverse(int x,int y) {
 		int stone;
 		int[][] save = new int[8][8];
 
-		//現在の盤面を取得
-		for(int i=0;i<8;i++) {
+		for(int i=0;i<8;i++) {//現在の盤面を取得
 			for(int j=0;j<8;j++) {
 				if(cells[i][j]==0) {
 					save[i][j]=0;
@@ -162,7 +160,7 @@ public class game {
 			}
 		}
 
-		if(first_player==true) {
+		if(fp==true) {
 			stone = 1;
 		}else {
 			stone = 2;
@@ -179,7 +177,7 @@ public class game {
 
 		if(up || down || right || left || right_up || right_down || left_up || left_down) {
 				history.add(save);//盤面を保存
-				if(first_player==true) {
+				if(fp==true) {
 					history_turn.add(true);
 				}else {
 					history_turn.add(false);
@@ -188,11 +186,17 @@ public class game {
 		}
 	}
 
-	//指定方向のマスの相手の石を反転させる
+
 	//上方向
 	private boolean ReverseUp(int x,int y,int insert) {
 		boolean tonari=true;//変換できない場合、同色のとなりに石は置けない
 		int up=-1;
+
+		if(fp==true) {
+			insert = 1;
+		}else {
+			insert = 2;
+		}
 
 		for(int y_i=y-1;y_i>=0;y_i--) {
 			int check=cells[y_i][x];
@@ -201,7 +205,7 @@ public class game {
 				y_i=-1;
 				break;
 			case 1:
-				if(first_player==true) {
+				if(fp==true) {
 					if(tonari==false) {
 						up=y_i;
 					}
@@ -212,7 +216,7 @@ public class game {
 					continue;
 				}
 			case 2:
-				if(first_player==true) {
+				if(fp==true) {
 					tonari=false;
 					continue;
 				}else {
@@ -249,7 +253,7 @@ public class game {
 				i=8;
 				break;
 			case 1:
-				if(first_player==true) {
+				if(fp==true) {
 					if(tonari==false) {
 						down=i;
 					}
@@ -260,7 +264,7 @@ public class game {
 					continue;
 				}
 			case 2:
-				if(first_player==false) {
+				if(fp==false) {
 					if(tonari==false) {
 						down=i;
 					}
@@ -298,7 +302,7 @@ public class game {
 				i=8;
 				break;
 			case 1:
-				if(first_player==true) {
+				if(fp==true) {
 					if(tonari==false) {
 						right=i;
 					}
@@ -309,7 +313,7 @@ public class game {
 					continue;
 				}
 			case 2:
-				if(first_player==false) {
+				if(fp==false) {
 					if(tonari==false) {
 						right=i;
 					}
@@ -345,7 +349,7 @@ public class game {
 				i=-1;
 				break;
 			case 1:
-				if(first_player==true) {
+				if(fp==true) {
 					if(tonari==false) {
 						left=i;
 					}
@@ -356,7 +360,7 @@ public class game {
 					continue;
 				}
 			case 2:
-				if(first_player==false) {
+				if(fp==false) {
 					if(tonari==false) {
 						left=i;
 					}
@@ -393,7 +397,7 @@ public class game {
 				lu=10;
 				break;
 			case 1:
-				if(first_player==true) {
+				if(fp==true) {
 					if(tonari==false) {
 						lup_pos=lu;
 					}
@@ -405,7 +409,7 @@ public class game {
 					continue;
 				}
 			case 2:
-				if(first_player==false) {
+				if(fp==false) {
 					if(tonari==false) {
 						lup_pos=lu;
 					}
@@ -444,7 +448,7 @@ public class game {
 				ld=10;
 				break;
 			case 1:
-				if(first_player==true) {
+				if(fp==true) {
 					if(tonari==false) {
 						ld_pos=ld;
 					}
@@ -456,7 +460,7 @@ public class game {
 					continue;
 				}
 			case 2:
-				if(first_player==false) {
+				if(fp==false) {
 					if(tonari==false) {
 						ld_pos=ld;
 					}
@@ -495,7 +499,7 @@ public class game {
 				rd=10;
 				break;
 			case 1:
-				if(first_player==true) {
+				if(fp==true) {
 					if(tonari==false) {
 						rd_pos=rd;
 					}
@@ -507,7 +511,7 @@ public class game {
 					continue;
 				}
 			case 2:
-				if(first_player==false) {
+				if(fp==false) {
 					if(tonari==false) {
 						rd_pos=rd;
 					}
@@ -547,7 +551,7 @@ public class game {
 				ru=10;
 				break;
 			case 1:
-				if(first_player==true) {
+				if(fp==true) {
 					if(tonari==false) {
 						ru_pos=ru;
 					}
@@ -559,7 +563,7 @@ public class game {
 					continue;
 				}
 			case 2:
-				if(first_player==false) {
+				if(fp==false) {
 					if(tonari==false) {
 						ru_pos=ru;
 					}
@@ -583,7 +587,6 @@ public class game {
 		}
 	}
 
-	//次に置くことができるマスがあればtrueを返す
 	//上方向
 	private boolean JudgeUp(int x,int y) {
 		boolean tonari=true;//反転できない場合、同色のとなりに石は置けない
@@ -595,7 +598,7 @@ public class game {
 				i=-1;
 				break;
 			case 1:
-				if(first_player==true) {
+				if(fp==true) {
 					if(tonari==false) {
 						return true;
 					}
@@ -606,7 +609,7 @@ public class game {
 					continue;
 				}
 			case 2:
-			if(first_player==true) {
+			if(fp==true) {
 				tonari=false;
 				continue;
 			}else {
@@ -634,7 +637,7 @@ public class game {
 				i=8;
 				break;
 			case 1:
-				if(first_player==true) {
+				if(fp==true) {
 					if(tonari==false) {
 						return true;
 					}
@@ -645,7 +648,7 @@ public class game {
 					continue;
 				}
 			case 2:
-				if(first_player==false) {
+				if(fp==false) {
 					if(tonari==false) {
 						return true;
 					}
@@ -672,7 +675,7 @@ public class game {
 				i=8;
 				break;
 			case 1:
-				if(first_player==true) {
+				if(fp==true) {
 					if(tonari==false) {
 						return true;
 					}
@@ -683,7 +686,7 @@ public class game {
 					continue;
 				}
 			case 2:
-				if(first_player==false) {
+				if(fp==false) {
 					if(tonari==false) {
 						return true;
 					}
@@ -712,7 +715,7 @@ public class game {
 				i=-1;
 				break;
 			case 1:
-				if(first_player==true) {
+				if(fp==true) {
 					if(tonari==false) {
 						return true;
 					}
@@ -723,7 +726,7 @@ public class game {
 					continue;
 				}
 			case 2:
-				if(first_player==false) {
+				if(fp==false) {
 					if(tonari==false) {
 						return true;
 					}
@@ -740,7 +743,6 @@ public class game {
 		return false;
 	}
 
-	//左上方向
 	private boolean JudgeLeftUp(int x,int y) {
 		//左上方向
 		boolean tonari=true;
@@ -754,7 +756,7 @@ public class game {
 				lu=10;
 				break;
 			case 1:
-				if(first_player==true) {
+				if(fp==true) {
 					if(tonari==false) {
 						return true;
 					}
@@ -766,7 +768,7 @@ public class game {
 					continue;
 				}
 			case 2:
-				if(first_player==false) {
+				if(fp==false) {
 					if(tonari==false) {
 						return true;
 					}
@@ -795,7 +797,7 @@ public class game {
 				ld=10;
 				break;
 			case 1:
-				if(first_player==true) {
+				if(fp==true) {
 					if(tonari==false) {
 						return true;
 					}
@@ -807,7 +809,7 @@ public class game {
 					continue;
 				}
 			case 2:
-				if(first_player==false) {
+				if(fp==false) {
 					if(tonari==false) {
 						return true;
 					}
@@ -836,7 +838,7 @@ public class game {
 				rd=10;
 				break;
 			case 1:
-				if(first_player==true) {
+				if(fp==true) {
 					if(tonari==false) {
 						return true;
 					}
@@ -848,7 +850,7 @@ public class game {
 					continue;
 				}
 			case 2:
-				if(first_player==false) {
+				if(fp==false) {
 					if(tonari==false) {
 						return true;
 					}
@@ -878,7 +880,7 @@ public class game {
 				ru=10;
 				break;
 			case 1:
-				if(first_player==true) {
+				if(fp==true) {
 					if(tonari==false) {
 						return true;
 					}
@@ -890,7 +892,7 @@ public class game {
 					continue;
 				}
 			case 2:
-				if(first_player==false) {
+				if(fp==false) {
 					if(tonari==false) {
 						return true;
 					}

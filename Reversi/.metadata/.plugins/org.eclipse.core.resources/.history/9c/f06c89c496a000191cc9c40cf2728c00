@@ -4,11 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class game {
-	private int[][] cells= new int[8][8];							//盤面の状態のデータを格納する
-	private int[][] koho_cells= new int[8][8];						//次に石をおける場所かどうかを格納する
-	private boolean first_player =true;							//先攻か後攻かを判定
-	public List<int[][]> history = new ArrayList<int[][]>();		//過去の盤面を格納する
-	public List<Boolean> history_turn = new ArrayList<Boolean>();	//過去の手番を格納する
+	private int[][] cells= new int[8][8];
+	private int[][] koho_cells= new int[8][8];
+	private boolean first_player =true;//先攻か後攻かを判定
+	public List<int[][]> history = new ArrayList<int[][]>();
+	public List<Boolean> history_turn = new ArrayList<Boolean>();
 
 
 	public game() {
@@ -144,13 +144,11 @@ public class game {
 		}
 	}
 
-	//石を反転させる
 	public void Reverse(int x,int y) {
 		int stone;
 		int[][] save = new int[8][8];
 
-		//現在の盤面を取得
-		for(int i=0;i<8;i++) {
+		for(int i=0;i<8;i++) {//現在の盤面を取得
 			for(int j=0;j<8;j++) {
 				if(cells[i][j]==0) {
 					save[i][j]=0;
