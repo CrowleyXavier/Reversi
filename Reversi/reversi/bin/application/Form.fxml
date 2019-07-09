@@ -6,11 +6,25 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.BorderPane?>
 
-
-
-<BorderPane prefHeight="300.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.FormController">
+<BorderPane prefHeight="400.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.FormController">
    <center>
       <Canvas fx:id="canvas" height="200.0" width="200.0" BorderPane.alignment="CENTER" />
    </center>
+   <bottom>
+      <HBox alignment="CENTER" prefHeight="90.0" prefWidth="400.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button fx:id="button_Reset" mnemonicParsing="false" onAction="#onResetClicked" text="Reset" />
+            <Button fx:id="button_Undo" mnemonicParsing="false" onAction="#onUndoClicked" text="Undo" />
+         </children>
+      </HBox>
+   </bottom>
+   <top>
+      <VBox alignment="CENTER" prefHeight="107.0" prefWidth="400.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label fx:id="label_text" text="Label" />
+            <Label fx:id="label_sum" text="Label" />
+         </children>
+      </VBox>
+   </top>
 
 </BorderPane>
