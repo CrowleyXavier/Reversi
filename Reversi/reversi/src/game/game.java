@@ -4,11 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class game {
-	private int[][] cells= new int[8][8];							//盤面の状態のデータを格納する
-	private int[][] koho_cells= new int[8][8];						//次に石をおける場所かどうかを格納する
-	private boolean first_player =true;							//先攻か後攻かを判定
+	private int[][] cells= new int[8][8];					//盤面の状態のデータを格納する
+	private int[][] koho_cells= new int[8][8];				//次に石をおける場所かどうかを格納する
+	private boolean first_player =true;					//先攻か後攻かを判定
 	public List<int[][]> history = new ArrayList<int[][]>();		//過去の盤面を格納する
-	public List<Boolean> history_turn = new ArrayList<Boolean>();	//過去の手番を格納する
+	public List<Boolean> history_turn = new ArrayList<Boolean>();		//過去の手番を格納する
 
 
 	public game() {
