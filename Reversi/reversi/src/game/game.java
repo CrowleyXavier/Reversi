@@ -742,7 +742,6 @@ public class game {
 
 	//左上方向
 	private boolean JudgeLeftUp(int x,int y) {
-		//左上方向
 		boolean tonari=true;
 		int lu=1;
 
@@ -905,11 +904,4 @@ public class game {
 		}
 		return false;
 	}
-
 }
-
-
-
-
-
-
